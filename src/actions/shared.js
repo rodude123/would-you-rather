@@ -1,7 +1,7 @@
 import {getUsers} from './getUsers'
 import {getQuestions} from './getQuestions'
 import {setAuthUser} from './authUser'
-import {_getQuestions, _getUsers, _saveQuestion, _saveQuestionAnswer,} from '../utils/_DATA'
+import {_getQuestions, _getUsers, _saveQuestion, _saveQuestionAnswer,} from '../_DATA'
 
 const AUTHED_ID = ''
 
