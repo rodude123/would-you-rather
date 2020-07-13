@@ -1,8 +1,7 @@
-import {receiveUsers} from '../actions/users'
-import {receiveQuestions} from '../actions/getQuestions'
-import {setAuthedUser} from '../actions/authUser'
+import {getUsers} from './getUsers'
+import {getQuestions} from './getQuestions'
+import {setAuthUser} from './authUser'
 import {_getQuestions, _getUsers, _saveQuestion, _saveQuestionAnswer,} from '../utils/_DATA'
-import {hideLoading, showLoading} from 'react-redux-loading'
 
 const AUTHED_ID = ''
 
@@ -21,28 +20,25 @@ export const getInitialData = () => Promise.all([
 	questions,
 }));
 
-export const saveQuestionAnswer = info => _saveQuestionAnswer(info);
+export const saveQuestionAnswer = _saveQuestionAnswer;
 
-export const saveQuestion = info => _saveQuestion(info);
+export const saveQuestion = _saveQuestion;
 
 export const handleInitialData = () => (dispatch) =>
 {
-	dispatch(showLoading())
-	return getInitialData()
-	.then(({users, questions}) =>
+	return getInitialData().then(({users, questions}) =>
 	{
-		dispatch(receiveUsers(users))
-		dispatch(receiveQuestions(questions))
-		dispatch(setAuthedUser(AUTHED_ID))
-		dispatch(hideLoading())
+		dispatch(getUsers(users))
+		dispatch(getQuestions(questions))
+		dispatch(setAuthUser(AUTHED_ID))
 	})
 };
 
-const answerQuestion = ({qid, authedUser, answer}, type) => 
+const answerQuestion = ({qid, authUser, answer}, type) =>
 ({
 	type: type,
 	qid,
-	authedUser,
+	authUser,
 	answer
 });
 
@@ -51,8 +47,7 @@ export const handleAnswerQuestion = info => (dispatch) =>
 	dispatch(answerQuestion(info, ANSWER_USER))
 	dispatch(answerQuestion(info, ANSWER_QUESTION))
 	
-	return saveQuestionAnswer(info)
-	.catch((e) =>
+	return saveQuestionAnswer(info).catch((e) =>
 	{
 		console.warn('Error in answerQuestion: ', e)
 		dispatch(answerQuestion(info), UNANSWERED_USER)
@@ -64,26 +59,23 @@ export const handleAnswerQuestion = info => (dispatch) =>
 const addQuestion = (question, type) =>
 ({
 	type: type,
-	authedUser: question.author,
+	authUser: question.author,
 	id: question.id,
 	question: question
 });
 
 export const handleAddQuestion = info => (dispatch, getState) =>
 {
-	const {authedUser} = getState()
+	const {authUser} = getState()
 	
-	dispatch(showLoading())
 	
 	return saveQuestion({
-		author: authedUser,
+		author: authUser,
 		optionOneText: info.optionOne,
 		optionTwoText: info.optionTwo
-	})
-	.then((question) =>
+	}).then((question) =>
 	{
 		dispatch(addQuestion(question, ADD_USER))
 		dispatch(addQuestion(question, ADD_QUESTION))
 	})
-	.then(() => dispatch(hideLoading()))
 };
