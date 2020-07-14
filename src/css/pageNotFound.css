@@ -1,0 +1,18 @@
+.notFound span{
+    font-size: 100px;
+}
+
+.notFound {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.notFound .content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
