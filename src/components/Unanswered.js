@@ -10,13 +10,12 @@ class UnansweredQuestion extends Component
 		answer: ''
 	}
 	
-	handleChange = (e) =>
+	handleChange = e =>
 	{
 		this.setState({answer: e.target.value})
-		console.log(this.state.answer);
 	}
 	
-	handleAnswer = (e) =>
+	handleAnswer = e =>
 	{
 		e.preventDefault()
 		
@@ -31,7 +30,7 @@ class UnansweredQuestion extends Component
 		onViewPoll(question.id)
 	}
 	
-	handleViewPoll = (e) =>
+	handleViewPoll = e =>
 	{
 		e.preventDefault()
 		
@@ -52,25 +51,27 @@ class UnansweredQuestion extends Component
 		const {name, avatar, optionOne, optionTwo} = question
 		
 		return (
-			<div className='question' onClick={this.handleViewPoll}>
-				<div>
-					<p>{name} asks</p>
-				</div>
-				<div>
-					<img src={avatar !== '' ? avatar : '../blankProfile.png'} alt={`Avatar of ${name}`} style={{width: 96, height: 96}} className='avatar'/>
+			<div className='question'>
+				<div className="content">
 					<div>
-						<p>Would You Rather ...</p>
-						<form className='question-info' onSubmit={this.handleAnswer}>
-							<input type='radio' checked={this.state.answer === "optionOne"} name='optionOne'
-							       value='optionOne' onChange={this.handleChange}/>
-							{optionOne.text}
-							<br/>
-							<input type='radio' checked={this.state.answer === "optionTwo"} name='optionTwo'
-							       value='optionTwo' onChange={this.handleChange}/>
-							{optionTwo.text}
-							<br/><br/>
-							<button className="btn" type="submit" disabled={!this.state.answer}>Submit</button>
-						</form>
+						<p>{name} asks</p>
+					</div>
+					<div>
+						<img src={avatar !== '' ? avatar : '../blankProfile.png'} alt={`Avatar of ${name}`} style={{width: 96, height: 96}} className='avatar'/>
+						<div>
+							<p>Would You Rather ...</p>
+							<form className='question-info' onSubmit={this.handleAnswer}>
+								<input type='radio' checked={this.state.answer === "optionOne"} name='optionOne'
+								       value='optionOne' onChange={this.handleChange}/>
+								{optionOne.text}
+								<br/>
+								<input type='radio' checked={this.state.answer === "optionTwo"} name='optionTwo'
+								       value='optionTwo' onChange={this.handleChange}/>
+								{optionTwo.text}
+								<br/><br/>
+								<button className="btn" type="submit" disabled={!this.state.answer}>Submit</button>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -84,9 +85,7 @@ function mapStateToProps({authUser, users, questions}, {id, onViewPoll})
 	return {
 		authUser,
 		onViewPoll,
-		question: question
-			? formatQuestion(question, users[question.author], authUser)
-			: null
+		question: question ? formatQuestion(question, users[question.author], authUser) : null
 	}
 }
 

@@ -1,31 +1,22 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {formatQuestion} from './helper'
-import "../css/app.css"
+import React, {Component} from 'react';
+import {formatQuestion} from "./helper";
+import {connect} from "react-redux";
+import '../css/app.css'
 
-class Answered extends Component
+class ViewQuestion extends Component
 {
-	handleViewPoll = (e) =>
+	handleViewQuestion = e =>
 	{
 		e.preventDefault()
 		
 		const {question, onViewPoll} = this.props
 		
 		onViewPoll(question.id)
-	}
+	};
 	
 	render()
 	{
-		const {question} = this.props
-		
-		if (question === null)
-		{
-			return <p>This question doesn't exist</p>
-		}
-		
-		const {
-			name, avatar, optionOne, optionTwo, answer
-		} = question
+		const {name, avatar, optionOne, optionTwo, answer} = this.props.question
 		
 		return (
 			<div className='question content'>
@@ -37,13 +28,15 @@ class Answered extends Component
 					<div>
 						<p>Would You Rather ...</p>
 						<div>
-							<p>{answer === 1 ? optionOne.text : optionTwo.text}</p>
-							<button className="btn" onClick={this.handleViewPoll}>View Poll</button>
+							<p>{optionOne.text.charAt(0).toUpperCase() + optionOne.text.slice(1)}</p>
+							<p>OR</p>
+							<p>{optionTwo.text.charAt(0).toUpperCase() + optionTwo.text.slice(1)}</p>
+							<button className="btn" onClick={this.handleViewQuestion}>View Question</button>
 						</div>
 					</div>
 				</div>
 			</div>
-		)
+		);
 	}
 }
 
@@ -57,4 +50,4 @@ function mapStateToProps({authUser, users, questions}, {id, onViewPoll})
 	}
 }
 
-export default connect(mapStateToProps)(Answered)
+export default connect(mapStateToProps)(ViewQuestion)

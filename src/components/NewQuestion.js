@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {handleAddQuestion} from '../actions/shared'
 import {Redirect} from 'react-router-dom'
+import '../css/app.css'
 
 class NewQuestion extends Component
 {
@@ -51,20 +52,22 @@ class NewQuestion extends Component
 		}
 		
 		return (
-			<div>
-				<h1 className='center'>Create new Question</h1>
-				<p>Complete the question:</p>
-				<h3>Would you rather ...</h3>
-				<form className='new-tweet' onSubmit={this.handleSubmit}>
-					<input placeholder="Enter Option One Text Here" type='text' name='1' value={this.state.optionOne}
-					       onChange={this.handleChange}/>
-					<p>OR</p>
-					<input placeholder="Enter Option Two Text Here" type='text' name='2' value={this.state.optionTwo}
-					       onChange={this.handleChange}/>
-					<br/>
-					<br/>
-					<button type='submit' disabled={optionOne === '' || optionTwo === ''}>Submit</button>
-				</form>
+			<div className='question'>
+				<div className="content">
+					<h1 className='center'>Create new Question</h1>
+					<p>Complete the question:</p>
+					<h3>Would you rather ...</h3>
+					<form className='new-tweet' onSubmit={this.handleSubmit}>
+						<input placeholder="Enter Option One Text Here" type='text' name='1' value={this.state.optionOne}
+						       onChange={this.handleChange}/>
+						<p>OR</p>
+						<input placeholder="Enter Option Two Text Here" type='text' name='2' value={this.state.optionTwo}
+						       onChange={this.handleChange}/>
+						<br/>
+						<br/>
+						<button type='submit' disabled={optionOne === '' || optionTwo === ''}>Submit</button>
+					</form>
+				</div>
 			</div>
 		)
 	}

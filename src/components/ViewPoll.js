@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {formatQuestion} from './helper'
 import {Redirect} from 'react-router-dom'
 import Unanswered from './Unanswered'
+import '../css/app.css'
 
 class ViewPoll extends Component
 {
@@ -42,17 +43,19 @@ class ViewPoll extends Component
 		
 		return (
 			<div className='question'>
-				<div>
-					<p>Asked by {name} </p>
-				</div>
-				<div>
-					<img src={avatar !== '' ? avatar : '../blankProfile.png'} alt={`Avatar of ${name}`} style={{width: 96, height: 96}} className='avatar'/>
+				<div className='content'>
 					<div>
-						<p>Results: (*: your vote)</p>
-						<p>Would You Rather {optionOne.text}</p>
-						<p>{`${voteOne} out of ${total} vote(s) (${perfOne.toFixed(2)}%) ${vote === 1 ? '(*)' : ''}`}</p>
-						<p>Would You Rather {optionTwo.text}</p>
-						<p>{`${voteTwo} out of ${total} vote(s) (${perfTwo.toFixed(2)}%) ${vote === 2 ? '(*)' : ''}`}</p>
+						<p>Asked by {name} </p>
+					</div>
+					<div>
+						<img src={avatar !== '' ? avatar : '../blankProfile.png'} alt={`Avatar of ${name}`} style={{width: 96, height: 96}} className='avatar'/>
+						<div>
+							<p>Results: (*: your vote)</p>
+							<p>Would You Rather {optionOne.text}</p>
+							<p>{`${voteOne} out of ${total} vote(s) (${perfOne.toFixed(2)}%) ${vote === 1 ? '(*)' : ''}`}</p>
+							<p>Would You Rather {optionTwo.text}</p>
+							<p>{`${voteTwo} out of ${total} vote(s) (${perfTwo.toFixed(2)}%) ${vote === 2 ? '(*)' : ''}`}</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -67,9 +70,7 @@ function mapStateToProps({authUser, questions, users}, props)
 	
 	return {
 		authUser,
-		question: question
-			? formatQuestion(question, users[question.author], authUser)
-			: null
+		question: question ? formatQuestion(question, users[question.author], authUser) : null
 	}
 }
 

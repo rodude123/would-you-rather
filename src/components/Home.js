@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Answered from './Answered'
-import Unanswered from './Unanswered'
+import ViewQuestion from "./ViewQuestion";
 import {Redirect} from 'react-router-dom'
 import "../css/app.css"
-import "../css/home.css"
 
 class Home extends Component
 {
@@ -42,7 +41,7 @@ class Home extends Component
 						{this.state.view === 'unanswered' ?
 							questionIDs.filter(id => !users[authUser].answers.hasOwnProperty(id)).map((id) => (
 								<li key={id}>
-									<Unanswered id={id} onViewPoll={this.toViewPoll}/>
+									<ViewQuestion id={id} onViewPoll={this.toViewPoll}/>
 								</li>
 							)) :
 							questionIDs.filter(id => users[authUser].answers.hasOwnProperty(id)).map((id) => (

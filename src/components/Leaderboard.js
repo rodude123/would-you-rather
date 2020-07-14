@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
+import "../css/app.css"
 
 class Leaderboard extends Component
 {
@@ -29,11 +30,11 @@ class Leaderboard extends Component
 		.sort((a, b) => users[b].score - users[a].score)
 		
 		return (
-			<div>
+			<div className='main'>
 				<div>
-					<ul className='leaderboard-list'>
+					<ul>
 						{userIDs.map(id => (
-							<li key={users[id].id}>
+							<li key={users[id].id} className='question content'>
 								<img src={users[id].avatarURL !== '' ? users[id].avatarURL : './blankProfile.png'} alt={`Avatar of ${users[id].name}`}
 								     style={{width: 96, height: 96}} className='avatar'/>
 								<p>{users[id].name}</p>
