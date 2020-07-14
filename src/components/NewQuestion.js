@@ -40,7 +40,7 @@ class NewQuestion extends Component
 	{
 		const {optionOne, optionTwo, toHome} = this.state
 		
-		if (this.props.authedUser === '')
+		if (this.props.authUser === '')
 		{
 			return <Redirect to={{pathname: '/login', link: this.props.location.pathname}}/>
 		}
@@ -70,10 +70,10 @@ class NewQuestion extends Component
 	}
 }
 
-function mapStateToProps({authedUser})
+function mapStateToProps({authUser})
 {
 	return {
-		authedUser
+		authUser
 	}
 }
 

@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import Answered from './Answered'
 import Unanswered from './Unanswered'
 import {Redirect} from 'react-router-dom'
+import "../css/app.css"
+import "../css/home.css"
 
 class Home extends Component
 {
@@ -11,46 +13,39 @@ class Home extends Component
 		toViewPoll: false
 	}
 	
-	handleAnswer = () => this.setState(
-		state => state.view === 'unanswered' ?
-			{view: 'answered'} :
-			{view: 'unanswered'}
-	)
+	handleAnswer = () => this.setState(state => state.view === 'unanswered' ? {view: 'answered'} : {view: 'unanswered'})
+	
 	
 	toViewPoll = (id) => this.setState(() => ({toViewPoll: id}))
 	
 	render()
 	{
-		const {authedUser, users, questionIDs} = this.props
+		const {authUser, users, questionIDs} = this.props
 		
-		if (authedUser === '')
+		if (authUser === '')
 		{
 			return <Redirect to={{pathname: '/login', link: this.props.location.pathname}}/>
 		}
 		
 		if (this.state.toViewPoll !== false)
 		{
-			return <Redirect to={`/questions/${this.state.toViewPoll}`}/>
+			return <Redirect to={`/questions/${this.state.toViewPoll}`} />
 		}
 		
 		return (
-			<div>
+			<div className="main">
 				<div>
-					<button onClick={this.handleAnswer} disabled={this.state.view === 'unanswered'}>Unanswered
-						Questions
-					</button>
-					<button onClick={this.handleAnswer} disabled={this.state.view === 'answered'}>Answered Questions
-					</button>
+					<button className="btn" onClick={this.handleAnswer}>{this.state.view.charAt(0).toUpperCase() + this.state.view.slice(1)} Questions</button>
 				</div>
 				<div>
 					<ul className='dashboard-list'>
 						{this.state.view === 'unanswered' ?
-							questionIDs.filter(id => !users[authedUser].answers.hasOwnProperty(id)).map((id) => (
+							questionIDs.filter(id => !users[authUser].answers.hasOwnProperty(id)).map((id) => (
 								<li key={id}>
 									<Unanswered id={id} onViewPoll={this.toViewPoll}/>
 								</li>
 							)) :
-							questionIDs.filter(id => users[authedUser].answers.hasOwnProperty(id)).map((id) => (
+							questionIDs.filter(id => users[authUser].answers.hasOwnProperty(id)).map((id) => (
 								<li key={id}>
 									<Answered id={id} onViewPoll={this.toViewPoll}/>
 								</li>
@@ -63,14 +58,11 @@ class Home extends Component
 	}
 }
 
-function mapStateToProps({authedUser, users, questions})
-{
-	return {
-		authedUser,
-		users,
-		questionIDs: Object.keys(questions)
-		.sort((a, b) => questions[b].timestamp - questions[a].timestamp)
-	}
-}
+const mapStateToProps = ({authUser, users, questions}) =>
+({
+	authUser,
+	users,
+	questionIDs: Object.keys(questions).sort((a, b) => questions[b].timestamp - questions[a].timestamp)
+});
 
 export default connect(mapStateToProps)(Home) 

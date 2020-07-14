@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {setAuthUser} from '../actions/authUser.js'
+import {setAuthUser} from '../actions/authUser'
+import '../css/nav.css'
 
 class Nav extends Component
 {
@@ -21,37 +22,21 @@ class Nav extends Component
 		return (
 			<nav className='nav'>
 				<ul>
-					<li>
-						<NavLink to='/' exact activeClassName='active'>
-							Home
-						</NavLink>
-					</li>
-					<li>
-						<NavLink to='/add' activeClassName='active'>
-							New Question
-						</NavLink>
-					</li>
-					<li>
-						<NavLink to='/leaderboard' activeClassName='active'>
-							Leaderboard
-						</NavLink>
-					</li>
-					<li>Hello, {show && users[authUser].name}</li>
-					<li>
-						<NavLink to='/login' activeClassName='active' onClick={this.handleLogout}>
-							Logout
-						</NavLink>
-					</li>
+					<li><NavLink to='/' exact activeClassName='active'>Home</NavLink></li>
+					<li><NavLink to='/add' activeClassName='active'>New Question</NavLink></li>
+					<li><NavLink to='/leaderboard' activeClassName='active'>Leaderboard</NavLink></li>
+					<li id="info">Hello, {show && users[authUser].name}</li>
+					<li><NavLink to='/login' activeClassName='active' onClick={this.handleLogout}>Logout</NavLink></li>
 				</ul>
 			</nav>
 		)
 	}
 }
 
-function mapStateToProps({authedUser, users})
+function mapStateToProps({authUser, users})
 {
 	return {
-		authedUser,
+		authUser,
 		users
 	}
 }

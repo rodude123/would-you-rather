@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {setAuthUser} from '../actions/authUser.js'
 import {Redirect} from 'react-router-dom'
+import {setAuthUser} from '../actions/authUser'
+import '../css/login.css'
+import '../css/app.css'
 
 class Login extends Component
 {
@@ -41,30 +43,33 @@ class Login extends Component
 		const {users} = this.props
 		
 		return (
-			<div>
-				<h3>Welcome to the Would You Rather App!</h3>
-				<p>Please sign in to continue</p>
-				<form onSubmit={this.handleLogin}>
-					<select defaultValue='select' onChange={this.handleChange}>
-						<option value='select' disabled>Select User</option>
-						{Object.keys(users).map(id =>
-						(
-							<option key={id} value={id}>{users[id].name}</option>
-						)
-						)}
-					</select>
-					<br/><br/>
-					<button type="submit" disabled={this.state.select === 'select'}>Sign In</button>
-				</form>
+			<div id="login">
+				<div>
+					<h3>Welcome to the Would You Rather App!</h3>
+					<p>Please sign in to continue</p>
+					<form onSubmit={this.handleLogin}>
+						<select defaultValue='select' onChange={this.handleChange}>
+							<option value='select' disabled>Select User</option>
+							{Object.keys(users).map(id =>
+								(
+									<option key={id} value={id}>{users[id].name}</option>
+								)
+							)}
+						</select>
+						<br/>
+						<br/>
+						<button className="btn" type="submit" disabled={this.state.select === 'select'}>Sign In</button>
+					</form>
+				</div>
 			</div>
 		)
 	}
 }
 
-function mapStateToProps({authedUser, users})
+function mapStateToProps({authUser, users})
 {
 	return {
-		authedUser,
+		authUser,
 		users
 	}
 }

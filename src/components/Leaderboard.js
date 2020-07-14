@@ -6,10 +6,10 @@ class Leaderboard extends Component
 {
 	render()
 	{
-		const {authedUser} = this.props
+		const {authUser} = this.props
 		const users = Object.assign({}, this.props.users)
 		
-		if (authedUser === '')
+		if (authUser === '')
 		{
 			return <Redirect to={{pathname: '/login', link: this.props.location.pathname}}/>
 		}
@@ -34,7 +34,7 @@ class Leaderboard extends Component
 					<ul className='leaderboard-list'>
 						{userIDs.map(id => (
 							<li key={users[id].id}>
-								<img src={users[id].avatarURL} alt={`Avatar of ${users[id].name}`}
+								<img src={users[id].avatarURL !== '' ? users[id].avatarURL : './blankProfile.png'} alt={`Avatar of ${users[id].name}`}
 								     style={{width: 96, height: 96}} className='avatar'/>
 								<p>{users[id].name}</p>
 								<p>{`Answered Questions: ${users[id].answered}`}</p>
@@ -49,10 +49,10 @@ class Leaderboard extends Component
 	}
 }
 
-function mapStateToProps({authedUser, users})
+function mapStateToProps({authUser, users})
 {
 	return {
-		authedUser,
+		authUser,
 		users
 	}
 }

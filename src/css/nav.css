@@ -1,0 +1,39 @@
+body{
+    margin: 0;
+}
+
+.nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+}
+
+.nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    color: white;
+}
+
+.nav li {
+    float: left;
+    display: block;
+}
+
+.nav li a, .nav #info {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.nav li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.nav .active {
+    background-color: #8cc02b;
+}

@@ -14,9 +14,9 @@ class ViewPoll extends Component
 	
 	render()
 	{
-		const {question, authedUser} = this.props
+		const {question, authUser} = this.props
 		
-		if (authedUser === '')
+		if (authUser === '')
 		{
 			return <Redirect to={{pathname: '/login', link: this.props.location.pathname}}/>
 		}
@@ -27,7 +27,7 @@ class ViewPoll extends Component
 		}
 		
 		const {name, avatar, optionOne, optionTwo} = question
-		const vote = optionOne.votes.includes(authedUser) ? 1 : optionTwo.votes.includes(authedUser) ? 2 : 0
+		const vote = optionOne.votes.includes(authUser) ? 1 : optionTwo.votes.includes(authUser) ? 2 : 0
 		
 		if (vote === 0)
 		{
@@ -46,7 +46,7 @@ class ViewPoll extends Component
 					<p>Asked by {name} </p>
 				</div>
 				<div>
-					<img src={avatar} alt={`Avatar of ${name}`} style={{width: 96, height: 96}} className='avatar'/>
+					<img src={avatar !== '' ? avatar : '../blankProfile.png'} alt={`Avatar of ${name}`} style={{width: 96, height: 96}} className='avatar'/>
 					<div>
 						<p>Results: (*: your vote)</p>
 						<p>Would You Rather {optionOne.text}</p>
@@ -60,15 +60,15 @@ class ViewPoll extends Component
 	}
 }
 
-function mapStateToProps({authedUser, questions, users}, props)
+function mapStateToProps({authUser, questions, users}, props)
 {
 	const {id} = props.match.params
 	const question = questions[id]
 	
 	return {
-		authedUser,
+		authUser,
 		question: question
-			? formatQuestion(question, users[question.author], authedUser)
+			? formatQuestion(question, users[question.author], authUser)
 			: null
 	}
 }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {formatQuestion} from './helper'
+import "../css/app.css"
 
 class Answered extends Component
 {
@@ -32,12 +33,12 @@ class Answered extends Component
 					<p>{name} asks</p>
 				</div>
 				<div>
-					<img src={avatar} alt={`Avatar of ${name}`} style={{width: 96, height: 96}} className='avatar'/>
+					<img src={avatar !== '' ? avatar : '../blankProfile.png'} alt={`Avatar of ${name}`} style={{width: 96, height: 96}} className='avatar'/>
 					<div>
 						<p>Would You Rather ...</p>
 						<div>
 							<p>{answer === 1 ? optionOne.text : optionTwo.text}</p>
-							<button onClick={this.handleViewPoll}>View Poll</button>
+							<button className="btm" onClick={this.handleViewPoll}>View Poll</button>
 						</div>
 					</div>
 				</div>
@@ -46,13 +47,13 @@ class Answered extends Component
 	}
 }
 
-function mapStateToProps({authedUser, users, questions}, {id, onViewPoll})
+function mapStateToProps({authUser, users, questions}, {id, onViewPoll})
 {
 	const question = questions[id]
 	return {
-		authedUser,
+		authUser,
 		onViewPoll,
-		question: question ? formatQuestion(question, users[question.author], authedUser) : null
+		question: question ? formatQuestion(question, users[question.author], authUser) : null
 	}
 }
 

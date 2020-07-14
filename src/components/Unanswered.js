@@ -2,27 +2,29 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {formatQuestion} from './helper'
 import {handleAnswerQuestion} from '../actions/shared'
+import "../css/app.css"
 
 class UnansweredQuestion extends Component
 {
 	state = {
-		answer: 0
+		answer: ''
 	}
 	
 	handleChange = (e) =>
 	{
 		this.setState({answer: e.target.value})
+		console.log(this.state.answer);
 	}
 	
 	handleAnswer = (e) =>
 	{
 		e.preventDefault()
 		
-		const {dispatch, question, authedUser, onViewPoll} = this.props
+		const {dispatch, question, authUser, onViewPoll} = this.props
 		
 		dispatch(handleAnswerQuestion({
 			qid: question.id,
-			authedUser,
+			authUser,
 			answer: this.state.answer
 		}))
 		
@@ -44,7 +46,7 @@ class UnansweredQuestion extends Component
 		
 		if (question === null)
 		{
-			return <p>This question doesn't existd</p>
+			return <p>This question doesn't exist</p>
 		}
 		
 		const {name, avatar, optionOne, optionTwo} = question
@@ -55,7 +57,7 @@ class UnansweredQuestion extends Component
 					<p>{name} asks</p>
 				</div>
 				<div>
-					<img src={avatar} alt={`Avatar of ${name}`} style={{width: 96, height: 96}} className='avatar'/>
+					<img src={avatar !== '' ? avatar : '../blankProfile.png'} alt={`Avatar of ${name}`} style={{width: 96, height: 96}} className='avatar'/>
 					<div>
 						<p>Would You Rather ...</p>
 						<form className='question-info' onSubmit={this.handleAnswer}>
@@ -67,7 +69,7 @@ class UnansweredQuestion extends Component
 							       value='optionTwo' onChange={this.handleChange}/>
 							{optionTwo.text}
 							<br/><br/>
-							<button type="submit" disabled={!this.state.answer}>Submit</button>
+							<button className="btn" type="submit" disabled={!this.state.answer}>Submit</button>
 						</form>
 					</div>
 				</div>
@@ -76,14 +78,14 @@ class UnansweredQuestion extends Component
 	}
 }
 
-function mapStateToProps({authedUser, users, questions}, {id, onViewPoll})
+function mapStateToProps({authUser, users, questions}, {id, onViewPoll})
 {
 	const question = questions[id]
 	return {
-		authedUser,
+		authUser,
 		onViewPoll,
 		question: question
-			? formatQuestion(question, users[question.author], authedUser)
+			? formatQuestion(question, users[question.author], authUser)
 			: null
 	}
 }
