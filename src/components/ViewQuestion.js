@@ -16,7 +16,7 @@ class ViewQuestion extends Component
 	
 	render()
 	{
-		const {name, avatar, optionOne, optionTwo, answer} = this.props.question
+		const {name, avatar, optionOne, optionTwo} = this.props.question
 		
 		return (
 			<div className='question content'>

@@ -10,7 +10,7 @@ class PageNotFound extends Component
 		return (
 			<div className='notFound'>
 				<div className='content'>
-					<span>&#x1F61E;</span>
+					<span role="img" aria-label="sad face emoji">&#x1F61E;</span>
 					Unfortunately Page not found
 					<NavLink className='btn' to='/'>🡸</NavLink>
 				</div>
